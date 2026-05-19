@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HABITAPLA | Excelencia en Plataformas y Materiales de Construcción</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* PALETA CORPORATIVA: CONCRETO INDUSTRIAL, ROJO ESTRUCTURAL & BLANCO RADIANTE */
+            --luxury-white: #ffffff;
+            --premium-bg: #f8f9fa;         
+            --studio-gray: #f1f3f5;        
+            --carbon-ink: #1e252b;         
+            --structural-red: #d32f2f;   
+            --red-light: rgba(211, 47, 47, 0.06);
+            --text-body: #3e4751;          
+            --text-muted: #7f8c8d;         
+            --border-refined: #e2e8f0;     
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-body); background-color: var(--luxury-white); -webkit-font-smoothing: antialiased; }
+
+        .tech-font, .logo, .sku-indicator, .spec-label, .btn-action-core, .metric, .filter-cell, .drawer-heading {
+            font-family: 'Chakra Petch', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* NAV CORPORATIVO PREMIUM */
+        nav { 
+            background: var(--luxury-white); padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-refined); gap: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+        }
+        .logo { font-size: 1.1rem; color: var(--carbon-ink); font-weight: 700; cursor: pointer; letter-spacing: 4px; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--structural-red); }
+        
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: color 0.2s; position: relative; padding: 5px 0; }
+        .nav-links a:hover, .nav-links a.active { color: var(--carbon-ink); }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -24px; left: 0; width: 100%; height: 2px; background: var(--structural-red); }
+        
+        /* BUSCADOR ESTILO ESTUDIO */
+        .search-wrapper-top { flex: 1; max-width: 340px; position: relative; }
+        .search-wrapper-top input { width: 100%; padding: 11px 12px 11px 40px; border: 1px solid var(--border-refined); background: var(--premium-bg); color: var(--carbon-ink); font-size: 0.8rem; font-family: 'Inter', sans-serif; transition: all 0.3s; border-radius: 4px; }
+        .search-wrapper-top input:focus { border-color: var(--structural-red); background: var(--luxury-white); box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.08); }
+        .search-wrapper-top i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.85rem; }
+
+        .cart-trigger { position: relative; cursor: pointer; color: var(--carbon-ink); font-size: 1rem; background: var(--premium-bg); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; border-radius: 4px; border: 1px solid var(--border-refined); }
+        .cart-trigger:hover { background: var(--carbon-ink); color: var(--luxury-white); border-color: var(--carbon-ink); }
+        .cart-badge-count { position: absolute; top: -5px; right: -5px; background: var(--structural-red); color: var(--luxury-white); font-size: 0.65rem; font-weight: 700; padding: 2px 6px; font-family: 'Chakra Petch'; border-radius: 10px; }
+
+        .hamburger { display: none; color: var(--carbon-ink); font-size: 1.2rem; cursor: pointer; }
+
+        /* BARRA DE BÚSQUEDA MÓVIL CLARA */
+        .mobile-search-strip {
+            display: none;
+            background: var(--premium-bg);
+            padding: 12px 5%;
+            border-bottom: 1px solid var(--border-refined);
+            position: relative;
+        }
+        .mobile-search-strip i {
+            position: absolute;
+            left: calc(5% + 15px);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .mobile-search-strip input {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            background: var(--luxury-white);
+            border: 1px solid var(--border-refined);
+            color: var(--carbon-ink);
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+
+        /* TAB BAR MÓVIL SUTIL */
+        .mobile-engineering-tabs { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: var(--luxury-white); border-top: 1px solid var(--border-refined); display: none; justify-content: space-around; align-items: center; z-index: 1010; box-shadow: 0 -4px 20px rgba(0,0,0,0.02); }
+        .tab-node { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; font-weight: 600; cursor: pointer; width: 100%; height: 100%; gap: 4px; letter-spacing: 0.5px; }
+        .tab-node.active { color: var(--structural-red); background: var(--premium-bg); }
+        .tab-node i { font-size: 1.1rem; }
+
+        /* HERO CLEAN & CORPORATE */
+        .hero-banner { 
+            height: 28vh; background: linear-gradient(90deg, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.7) 100%), url('https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=1400') center/cover;
+            display: flex; align-items: center; padding: 0 8%; color: var(--carbon-ink); border-bottom: 1px solid var(--border-refined);
+        }
+        .hero-banner.performance-bg { background: linear-gradient(90deg, rgba(255,255,255,0.95) 40%, rgba(255,255,255,0.7) 100%), url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=1400') center/cover; }
+        .hero-meta h1 { font-family: 'Chakra Petch', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; color: var(--carbon-ink); }
+        .hero-meta p { font-size: 0.85rem; color: var(--text-body); margin-top: 8px; font-weight: 400; max-width: 550px; }
+
+        /* SECCIONES DE CONTENIDO */
+        .view-segment { display: none; background: var(--premium-bg); min-height: 80vh; }
+        .view-segment.active { display: block; }
+        
+        .grid-header { padding: 45px 8% 15px; display: flex; align-items: flex-end; justify-content: space-between; background: var(--premium-bg); }
+        .grid-title-block { border-left: 3px solid var(--structural-red); padding-left: 15px; }
+        .grid-title-block span { font-size: 0.65rem; color: var(--structural-red); display: block; margin-bottom: 4px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        .grid-title-block h2 { font-size: 1.2rem; font-weight: 700; color: var(--carbon-ink); letter-spacing: -0.3px; }
+
+        /* ARQUITECTURA DE TARJETAS PREMIUM REFORZADA */
+        .industrial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 15px 8% 60px; background: var(--premium-bg); }
+        .automotive-card { background: var(--luxury-white); border: 1px solid var(--border-refined); display: flex; flex-direction: column; position: relative; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); height: 100%; border-radius: 6px; overflow: hidden; }
+        .automotive-card:hover { border-color: rgba(211, 47, 47, 0.25); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
+        
+        /* ZONA MULTIMEDIA EN BLANCO RADIANTE CON TRATAMIENTO DE FONDOS */
+        .card-media-zone { background: #fdfdfd; aspect-ratio: 16/12; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; border-bottom: 1px solid var(--studio-gray); }
+        .card-media-zone img { max-width: 85%; max-height: 85%; object-fit: contain; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
+        .automotive-card:hover .card-media-zone img { transform: scale(1.05); }
+        
+        .spec-tier-badge { position: absolute; bottom: 12px; right: 12px; background: var(--red-light); color: var(--structural-red); font-size: 0.6rem; font-weight: 700; padding: 4px 8px; border-radius: 3px; border: 1px solid rgba(211, 47, 47, 0.15); z-index: 2; }
+
+        /* NUEVO BLOQUE CONTENEDOR CONTRA COLISIONES */
+        .card-body-zone { padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; background: var(--luxury-white); }
+        
+        /* Línea superior controlada para Marca y Código OEM */
+        .card-header-block { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; width: 100%; gap: 10px; }
+        .card-manufacturer { font-size: 0.68rem; font-weight: 700; color: var(--structural-red); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sku-indicator { background: var(--premium-bg); color: var(--text-body); padding: 3px 6px; font-size: 0.58rem; font-weight: 600; border: 1px solid var(--border-refined); border-radius: 3px; white-space: nowrap; }
+
+        /* Título del producto blindado con altura fija y elipsis */
+        .card-body-zone h4 { 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            color: var(--carbon-ink); 
+            line-height: 1.4; 
+            margin-bottom: 14px; 
+            height: 40px; 
+            overflow: hidden; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            cursor: pointer; 
+            transition: color 0.2s; 
+        }
+        .card-body-zone h4:hover { color: var(--structural-red); }
+        
+        .card-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-top: 12px; border-top: 1px solid var(--border-refined); }
+        .price-tag { font-size: 1.05rem; font-weight: 700; color: var(--carbon-ink); font-family: 'Chakra Petch', sans-serif; }
+        .availability-status { font-size: 0.6rem; font-weight: 700; padding: 3px 8px; background: #e6ffed; color: #28a745; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 3px; }
+        .availability-status.status-low { background: #fff7e6; color: #d46b08; }
+        .availability-status.status-none { background: #f5f5f5; color: #595959; }
+
+        .btn-action-core { width: 100%; background: var(--carbon-ink); color: var(--luxury-white); padding: 13px; border: none; font-size: 0.7rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; border-radius: 4px; letter-spacing: 2px; }
+        .btn-action-core:hover { background: var(--structural-red); color: var(--luxury-white); }
+        .btn-action-core.disabled-state { background: #f1f3f5 !important; color: #dee2e6 !important; cursor: not-allowed !important; border: none !important; }
+
+        /* PANEL DE FILTROS LAB */
+        .telemetry-panel { 
+            background: var(--luxury-white); 
+            padding: 20px 8%; 
+            display: flex; 
+            gap: 10px; 
+            border-bottom: 1px solid var(--border-refined); 
+            overflow-x: auto; 
+            scrollbar-width: none; 
+            -webkit-overflow-scrolling: touch; 
+        }
+        .telemetry-panel::-webkit-scrollbar { display: none; }
+        
+        .filter-cell { 
+            background: var(--premium-bg); 
+            border: 1px solid var(--border-refined); 
+            padding: 12px 22px; 
+            color: var(--text-body); 
+            cursor: pointer; 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            white-space: nowrap; 
+            transition: all 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+        .filter-cell i { font-size: 0.8rem; color: var(--text-muted); }
+        .filter-cell:hover, .filter-cell.active-cell { border-color: var(--carbon-ink); color: var(--carbon-ink); background: var(--luxury-white); }
+        .filter-cell.active-cell { background: var(--structural-red) !important; color: var(--luxury-white) !important; border-color: var(--structural-red); }
+        .filter-cell.active-cell i { color: var(--luxury-white); }
+
+        .catalog-results-header { padding: 30px 8% 5px; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; background: var(--premium-bg); font-weight: 600; }
+
+        /* SUBTÍTULOS DRAWER */
+        .drawer-heading { font-size: 0.65rem; color: var(--structural-red); margin: 20px 0 10px 0; display: block; font-weight: 700; letter-spacing: 2px; }
+
+        /* ESPACIO DETALLE COMPONENTE AVANZADO */
+        .workspace-detail { display: flex; padding: 60px 8%; gap: 60px; background: var(--luxury-white); }
+        .blueprint-left { width: 45%; background: var(--premium-bg); border: 1px solid var(--border-refined); padding: 40px; display: flex; align-items: center; justify-content: center; position: relative; border-radius: 6px; }
+        .blueprint-left img { max-width: 95%; max-height: 380px; object-fit: contain; }
+        
+        .specs-right { width: 55%; }
+        .specs-right-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-refined); padding-bottom: 15px; }
+        .part-origin { font-size: 0.75rem; color: var(--text-muted); font-family: 'Chakra Petch'; font-weight: 600; }
+        .brand-seal { background: var(--premium-bg); color: var(--carbon-ink); border: 1px solid var(--border-refined); padding: 5px 14px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; }
+        
+        .component-title { font-size: 1.6rem; font-weight: 700; color: var(--carbon-ink); margin-bottom: 15px; line-height: 1.3; letter-spacing: -0.5px; }
+        .component-synopsis { font-size: 0.92rem; color: var(--text-body); line-height: 1.7; margin-bottom: 30px; }
+        
+        .interaction-module { display: flex; gap: 15px; align-items: center; margin-bottom: 35px; background: var(--premium-bg); padding: 16px; border: 1px solid var(--border-refined); border-radius: 4px; }
+        .quantity-controller { display: flex; align-items: center; background: var(--luxury-white); border: 1px solid var(--border-refined); height: 46px; border-radius: 4px; overflow: hidden; }
+        .qty-node-btn { width: 40px; height: 100%; border: none; background: transparent; cursor: pointer; font-size: 1.1rem; color: var(--carbon-ink); transition: background 0.2s; }
+        .qty-node-btn:hover { background: var(--premium-bg); }
+        .qty-node-display { width: 45px; text-align: center; border: none; font-weight: 600; font-size: 0.95rem; color: var(--carbon-ink); }
+
+        .btn-dispatch-wa { background: #111111; color: #ffffff; border: none; padding: 16px 28px; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s; text-decoration: none; width: 100%; border-radius: 4px; letter-spacing: 0.5px; }
+        .btn-dispatch-wa:hover { background: var(--structural-red); color: var(--luxury-white); }
+        .btn-dispatch-wa i { font-size: 1.3rem; color: #25D366; } 
+
+        /* TABS DATOS TÉCNICOS MATRIX */
+        .data-matrix { margin-top: 45px; }
+        .matrix-tabs { display: flex; border-bottom: 1px solid var(--border-refined); }
+        .matrix-trigger { background: none; border: none; padding: 14px 28px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); cursor: pointer; position: relative; text-transform: uppercase; letter-spacing: 1px; }
+        .matrix-trigger.active-trigger { color: var(--carbon-ink); }
+        .matrix-trigger.active-trigger::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--structural-red); }
+        
+        .matrix-pane { padding: 25px 0; display: none; }
+        .matrix-pane.active-pane { display: block; }
+        .matrix-pane ul { padding-left: 20px; color: var(--text-body); font-size: 0.88rem; line-height: 1.8; }
+        .matrix-pane ul li { margin-bottom: 12px; }
+        
+        .technical-spec-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .technical-spec-table tr { border-bottom: 1px solid var(--premium-bg); }
+        .technical-spec-table td { padding: 14px 12px; }
+        .spec-label { font-size: 0.68rem; color: var(--carbon-ink); font-weight: 700; width: 35%; letter-spacing: 1px; }
+        .spec-value { color: var(--text-body); }
+
+        /* PANEL COTIZACIÓN */
+        .telemetry-cart-panel { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh; background: var(--luxury-white); z-index: 4000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 35px; display: flex; flex-direction: column; border-left: 1px solid var(--border-refined); box-shadow: -10px 0 40px rgba(0,0,0,0.02); }
+        .telemetry-cart-panel.active { right: 0; }
+        .cart-node-item { display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--premium-bg); align-items: center; }
+        .cart-node-item img { width: 65px; height: 65px; object-fit: contain; background: var(--premium-bg); padding: 8px; border: 1px solid var(--border-refined); border-radius: 4px; }
+
+        /* WHATSAPP FLOTANTE SUTIL */
+        .whatsapp-floating-action { 
+            position: fixed; 
+            bottom: 85px; 
+            right: 24px; 
+            background-color: #111111; 
+            color: #ffffff; 
+            width: 52px; 
+            height: 52px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 1.4rem; 
+            z-index: 2000; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .whatsapp-floating-action:hover { 
+            transform: translateY(-3px); 
+            background-color: var(--structural-red); 
+        }
+
+        /* FOOTER CORPORATIVO */
+        footer { background: var(--carbon-ink); color: #7f8c8d; padding: 70px 8% 35px; border-top: 1px solid var(--border-refined); }
+        .footer-matrix { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; border-bottom: 1px solid #2c3e50; padding-bottom: 50px; }
+        .footer-unit h4 { font-size: 0.72rem; margin-bottom: 24px; color: var(--luxury-white); letter-spacing: 2px; text-transform: uppercase; }
+        .footer-unit p { font-size: 0.85rem; line-height: 1.8; color: #95a5a6; }
+        .footer-tree { list-style: none; }
+        .footer-tree li { margin-bottom: 14px; }
+        .footer-tree a { color: #95a5a6; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; cursor: pointer; }
+        .footer-tree a:hover { color: var(--structural-red); }
+        .contact-node { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: 0.85rem; color: #95a5a6; }
+        .contact-node i { color: var(--structural-red); font-size: 0.9rem; }
+        
+        .footer-base { padding-top: 35px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-base p { font-size: 0.78rem; color: #5f6c7d; }
+        .social-cluster { display: flex; gap: 24px; }
+        .social-cluster a { color: #5f6c7d; font-size: 1rem; transition: color 0.2s; }
+        .social-cluster a:hover { color: var(--luxury-white); }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .industrial-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 16px 5%; }
+            .nav-links, .search-wrapper-top { display: none; }
+            .mobile-search-strip { display: block; }
+            
+            .industrial-grid { 
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 12px !important; 
+                padding: 16px 3% 40px !important;
+            }
+            
+            .card-media-zone { aspect-ratio: 1/1 !important; padding: 14px; }
+            .card-body-zone { padding: 14px; }
+            .card-header-block { margin-bottom: 6px; gap: 6px; }
+            .card-manufacturer { font-size: 0.62rem; letter-spacing: 0.8px; }
+            .sku-indicator { font-size: 0.52rem; padding: 2px 4px; }
+            .card-body-zone h4 { font-size: 0.8rem; height: 34px; line-height: 1.3; margin-bottom: 10px; }
+            .price-tag { font-size: 0.92rem; }
+            
+            .workspace-detail { flex-direction: column; padding: 30px 5%; gap: 35px; }
+            .blueprint-left, .specs-right { width: 100%; }
+            .hamburger { display: block; }
+            .mobile-engineering-tabs { display: flex; }
+            .footer-matrix { grid-template-columns: 1fr; gap: 40px; }
+            footer { padding-bottom: 100px; }
+        }
+        @media (max-width: 480px) {
+            .industrial-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; padding: 12px 2% 35px !important; }
+            .card-body-zone { padding: 10px; }
+            .btn-action-core { padding: 10px 4px; font-size: 0.62rem; letter-spacing: 0.5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mobile-drawer" style="position:fixed; top:0; left:-100%; width:100%; height:100vh; z-index:3000; display:flex; transition:left 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.2); backdrop-filter:blur(4px);" onclick="toggleDrawer(false)"></div>
+        <div style="position:relative; width:85%; max-width:310px; height:100%; background:var(--luxury-white); border-right:1px solid var(--border-refined); display:flex; flex-direction:column; z-index:10; padding:30px; overflow-y:auto;">
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-bottom:1px solid var(--border-refined); padding-bottom:20px;">
+                <div class="logo" onclick="navigateTo('home')">
+    <img src="logo.png" alt="Habitapla" style="height: 45px; cursor: pointer;">
+</div>
+                <i class="fas fa-times" onclick="toggleDrawer(false)" style="color:var(--text-muted); cursor:pointer; font-size:1.2rem;"></i>
+            </div>
+            
+            <span class="drawer-heading">Sistemas Constructivos</span>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:25px;">
+                <div class="filter-cell" id="mb-nav-home" onclick="navigateFromDrawer('home')" style="width:100%; justify-content:flex-start;"><i class="fas fa-building"></i> Líneas de Planta</div>
+                <div class="filter-cell" id="mb-nav-new" onclick="navigateFromDrawer('new')" style="width:100%; justify-content:flex-start;"><i class="fas fa-star"></i> Lanzamientos</div>
+                <div class="filter-cell" id="mb-nav-catalog" onclick="navigateFromDrawer('catalog')" style="width:100%; justify-content:flex-start;"><i class="fas fa-cubes"></i> Catálogo Completo</div>
+            </div>
+
+            <span class="drawer-heading">Categorías</span>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:25px;">
+                <div class="filter-cell active-cell" id="mb-cat-all" onclick="filterCategoryMobile('all')" style="width:100%; justify-content:flex-start;"><i class="fas fa-layer-group"></i> Ver Todo</div>
+                <div class="filter-cell" id="mb-cat-Viguetas" onclick="filterCategoryMobile('Viguetas')" style="width:100%; justify-content:flex-start;"><i class="fas fa-border-all"></i> Viguetas Pretensadas</div>
+                <div class="filter-cell" id="mb-cat-Complementos" onclick="filterCategoryMobile('Complementos')" style="width:100%; justify-content:flex-start;"><i class="fas fa-box"></i> Complementos</div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div style="display:flex; align-items:center; gap:20px;">
+            <i class="fas fa-bars hamburger" onclick="toggleDrawer(true)"></i>
+            <div class="logo" onclick="navigateTo('home')">
+    <img src="logo.png" alt="Habitapla" style="height: 45px; cursor: pointer;">
+</div>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a id="link-home" class="active" onclick="navigateTo('home')">Líneas de Planta</a></li>
+            <li><a id="link-new" onclick="navigateTo('new')">Lanzamientos</a></li>
+            <li><a id="link-catalog" onclick="navigateTo('catalog')">Catálogo Técnico</a></li>
+        </ul>
+
+        <div class="search-wrapper-top">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-pc" placeholder="Buscar viguetas, medidas, plastoformo..." oninput="executeSearch(this.value)">
+        </div>
+        
+        <div class="cart-trigger" onclick="toggleCart(true)">
+            <i class="fas fa-file-invoice"></i>
+            <span class="cart-badge-count" id="global-cart-counter">0</span>
+        </div>
+    </nav>
+
+    <div class="mobile-search-strip">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-mobile" placeholder="Buscar material o componente..." oninput="executeSearch(this.value)">
+    </div>
+
+    <div class="mobile-engineering-tabs">
+        <div id="tab-home" class="tab-node active" onclick="navigateTo('home')">
+            <i class="fas fa-building"></i>
+            <span class="tech-font">Planta</span>
+        </div>
+        <div id="tab-catalog" class="tab-node" onclick="navigateTo('catalog')">
+            <i class="fas fa-cubes"></i>
+            <span class="tech-font">Catálogo</span>
+        </div>
+        <div id="tab-cart" class="tab-node" onclick="toggleCart(true)">
+            <i class="fas fa-file-invoice"></i>
+            <span class="tech-font">Cotizar</span>
+        </div>
+    </div>
+
+    <a href="https://wa.me/59176809201?text=Hola%20Habitapla%2C%20solicito%20asesoramiento%20técnico%20para%20una%20obra%20en%20Yacuiba." 
+       target="_blank" class="whatsapp-floating-action">
+        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+    </a>
+
+    <div id="view-home" class="view-segment active">
+        <header class="hero-banner">
+            <div class="hero-meta">
+                <h1>EXCELENCIA EN PLATAFORMAS</h1>
+                <p>Viguetas pretensadas de alta resistencia y complementos optimizados para losas seguras y duraderas en Yacuiba.</p>
+            </div>
+        </header>
+
+        <div class="grid-header">
+            <div class="grid-title-block">
+                <span>Elementos de Porteo Estructural</span>
+                <h2>Viguetas Pretensadas</h2>
+            </div>
+        </div>
+        <section class="industrial-grid" id="grid-home-viguetas"></section>
+
+        <div class="grid-header">
+            <div class="grid-title-block">
+                <span>Aligeramiento y Aislamiento Térmico</span>
+                <h2>Complementos de Losas</h2>
+            </div>
+        </div>
+        <section class="industrial-grid" id="grid-home-complementos"></section>
+    </div>
+
+    <div id="view-new" class="view-segment">
+        <header class="hero-banner performance-bg">
+            <div class="hero-meta">
+                <h1>ALTA DOSIFICACIÓN INDUSTRIAL</h1>
+                <p>Nuevos componentes de alta densidad certificados bajo normas estructurales exigentes.</p>
+            </div>
+        </header>
+        
+        <div class="grid-header">
+            <div class="grid-title-block">
+                <span>Últimos Lotes Verificados</span>
+                <h2>Materiales Destacados</h2>
+            </div>
+        </div>
+        <section class="industrial-grid" id="grid-new-performance"></section>
+    </div>
+
+    <div id="view-catalog" class="view-segment">
+        <div class="telemetry-panel">
+            <div class="filter-cell active-cell" id="cell-cat-all" onclick="filterCategory('all')"><i class="fas fa-layer-group"></i> Todos</div>
+            <div class="filter-cell" id="cell-cat-Viguetas" onclick="filterCategory('Viguetas')"><i class="fas fa-border-all"></i> Viguetas</div>
+            <div class="filter-cell" id="cell-cat-Complementos" onclick="filterCategory('Complementos')"><i class="fas fa-box"></i> Complementos</div>
+        </div>
+
+        <div class="catalog-results-header" id="results-count-tracker">Matriz General de Suministros</div>
+        <section class="industrial-grid" id="grid-catalog-telemetry"></section>
+    </div>
+
+    <div id="view-detail" class="view-segment">
+        <div class="workspace-detail">
+            <div class="blueprint-left">
+                <img id="detail-display-img" src="">
+            </div>
+            
+            <div class="specs-right">
+                <div class="specs-right-header">
+                    <div class="part-origin" id="detail-part-sku"></div>
+                    <span class="brand-seal" id="detail-brand-seal"></span>
+                </div>
+                
+                <h1 class="component-title" id="detail-component-name"></h1>
+                <p class="component-synopsis" id="detail-component-desc"></p>
+
+                <div id="detail-action-control-row" style="margin-bottom:30px;"></div>
+
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                    <button class="btn-action-core" style="padding:166px; padding:16px; background:var(--premium-bg); color: var(--carbon-ink); border: 1px solid var(--border-refined);" onclick="alert('Descargando guía de cálculo y dosificación...')">
+                        <i class="fas fa-file-pdf" style="color: #c92a2a; margin-right: 6px;"></i> Ficha de Cálculo Estructural
+                    </button>
+
+                    <button class="btn-dispatch-wa" id="detail-direct-wa-trigger">
+                        <i class="fab fa-whatsapp"></i>
+                        <div style="text-align:left; margin-left: 10px;">
+                            <span class="tech-font" style="font-size:0.55rem; display:block; opacity:0.8; color: #ffc107;">Cálculo métrico gratuito</span>
+                            <span style="font-size:0.88rem; font-weight:600;">Consultar Medidas con un Asesor</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="data-matrix">
+                    <div class="matrix-tabs">
+                        <button class="matrix-trigger active-trigger" id="tab-btn-attributes" onclick="toggleMatrixTab('attributes')">Ventajas Técnicas</button>
+                        <button class="matrix-trigger" id="tab-btn-specs" onclick="toggleMatrixTab('specs')">Especificaciones</button>
+                    </div>
+                    
+                    <div id="matrix-pane-attributes" class="matrix-pane active-pane">
+                        <ul id="detail-bullet-attributes"></ul>
+                    </div>
+                    
+                    <div id="matrix-pane-specs" class="matrix-pane">
+                        <table class="technical-spec-table" id="detail-table-specs"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-matrix">
+            <div class="footer-unit">
+               <div style="margin-bottom:20px;">
+    <img src="logo.png" alt="Habitapla" style="height: 40px;">
+</div>
+                <p>Fabricación y distribución de viguetas pretensadas de hormigón armado y complementos de losa de poliestireno expandido de alta densidad para todo el Chaco Boliviano.</p>
+            </div>
+            <div class="footer-unit">
+                <h4>Divisiones Constructivas</h4>
+                <ul class="footer-tree">
+                    <li><a onclick="navigateTo('home')">Viguetas de Resistencia</a></li>
+                    <li><a onclick="navigateTo('new')">Lanzamientos de Planta</a></li>
+                    <li><a onclick="navigateTo('catalog')">Catálogo de Materiales</a></li>
+                </ul>
+            </div>
+            <div class="footer-unit">
+                <h4>Soporte de Planta</h4>
+                <div class="contact-node"><i class="fas fa-map-marker-alt"></i><span>Barrio Nueva Esperanza, Yacuiba, Bolivia</span></div>
+                <div class="contact-node"><i class="fas fa-phone-alt"></i><span>+591 76809201</span></div>
+            </div>
+        </div>
+        <div class="footer-base">
+            <p>&copy; 2026 HABITAPLA. Todos los derechos reservados.</p>
+            <div class="social-cluster">
+                <a href="https://facebook.com/Habitapla" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://wa.me/59176809201" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="telemetry-cart-panel" id="cart-telemetry-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:35px; border-bottom:1px solid var(--border-refined); padding-bottom:20px;">
+            <h3 class="tech-font" style="font-size:0.85rem; color:var(--carbon-ink); font-weight: 700;">Presupuesto de Materiales</h3>
+            <i class="fas fa-times" onclick="toggleCart(false)" style="cursor:pointer; color:var(--text-muted); font-size: 1.1rem;"></i>
+        </div>
+        <div id="cart-nodes-wrapper" style="flex:1; overflow-y:auto;"></div>
+        <div style="padding-top:25px; border-top:1px solid var(--border-refined)">
+            <div style="display:flex; justify-content:space-between; margin-bottom:25px; font-family:'Chakra Petch';">
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight: 600;">VALOR TOTAL ESTIMADO:</span>
+                <span id="cart-sum-display" style="font-size:1.2rem; font-weight:700; color:var(--carbon-ink);">Bs. 0.00</span>
+            </div>
+            <button class="btn-action-core" style="padding:16px; display:flex; align-items:center; justify-content:center; gap:10px; background: #28a745; color: white;" onclick="dispatchWhatsAppOrder()">
+                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> Enviar Lista para Cotización Final
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // SE ADAPTÓ LA BASE DE DATOS CON LOS VALORES Y PRODUCTOS REALES DEL RUBRO DE HABITAPLA
+        const products = [
+            { 
+                id: 1, section: 'viguetas', brand: 'Habitapla', category: 'Viguetas', sku: 'VIG-PRE-H25', stock: 150, price: 42.00, badge: 'H25 Alta Resistencia',
+                name: 'Vigueta Pretensada de Hormigón de Alta Resistencia (Por Metro)', 
+                desc: 'Vigueta fabricada con hormigón de alta dosificación y alambres de acero pretensado. Ideal para luces intermedias y sobrecargas de diseño estructural seguro.', 
+                bullets: [
+                    'Acero de Alta Resistencia: Alambres pretensados certificados para evitar flexiones.',
+                    'Fraguado Controlado: Curado óptimo que asegura la máxima compresión del hormigón.',
+                    'Adherencia Superior: Geometría dentada para un agarre perfecto con la losa vaciada.'
+                ],
+                specs: { 'Fabricante': 'Habitapla Planta Yacuiba', 'Tipo': 'Pretensada Industrial', 'Dosificación': 'H25 (250 kg/cm²)', 'Corte': 'A medida del proyecto' },
+                img: 'https://imgs.search.brave.com/H67IagIOyzcY7MA9V2WMsz69_5ckNm3FZEx02Te8Xzw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzg5NDUyNy1NTEE3/NjI0OTk1NDg1MV8w/NTIwMjQtRS53ZWJw' // Puedes reemplazar por fotos tuyas del plastoformo o las viguetas
+            },
+            { 
+                id: 2, section: 'complementos', brand: 'Habitapla', category: 'Complementos', sku: 'COMP-PLAST-10', stock: 500, price: 14.50, badge: 'Aislamiento Térmico', 
+                name: 'Complemento de Plastoformo de EPS (Poliestireno Expandido) Altura 10cm', 
+                desc: 'Bloque aligerante de poliestireno expandido de alta densidad. Reduce drásticamente el peso propio de la losa y optimiza el uso de concreto.', 
+                bullets: [
+                    'Reducción de Carga: Disminuye hasta un 30% el peso estructural de la losa.',
+                    'Barrera Térmica y Acústica: Mantiene los ambientes más frescos en zonas de altas temperaturas como Yacuiba.',
+                    'Corte Preciso: Dimensiones estables que agilizan el armado en obra.'
+                ],
+                specs: { 'Fabricante': 'Habitapla Suministros', 'Material': 'Poliestireno Expandido (EPS)', 'Densidad': 'Estándar Estructural', 'Dimensiones': '10cm x 42cm x 100cm' },
+                img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVJr7ZHiLt8mCDEln6Y80QiLPdhM3oL5gG0Chtj2NV_g&s'
+            },
+            { 
+                id: 3, section: 'complementos', brand: 'Habitapla', category: 'Complementos', sku: 'COMP-PLAST-15', stock: 300, price: 18.00, badge: 'Losa Pesada', 
+                name: 'Complemento de Plastoformo de EPS de Alta Densidad Altura 15cm', 
+                desc: 'Módulo de EPS de mayor altura diseñado para losas con requerimientos estructurales superiores o mayores luces libres.', 
+                bullets: [
+                    'Máximo Espesor de Aligeramiento: Diseñado para losas de mayor peralte.',
+                    'Excelente Resistencia mecánica: Soporta el tránsito del personal durante el vaciado.',
+                    'Economía de Obra: Reduce el consumo de cemento por metro cuadrado.'
+                ],
+                specs: { 'Fabricante': 'Habitapla Suministros', 'Material': 'Poliestireno Expandido (EPS)', 'Densidad': 'Alta Densidad', 'Dimensiones': '15cm x 42cm x 100cm' },
+                img: 'https://www.preforte.com.bo/wp-content/uploads/2024/02/preforte-productos-prefabricados-losetas-adoquin-hexagonal-2.webp'
+            }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('habitapla_cart_core')) || [];
+        let activeCategory = 'all';
+        let activeBrand = 'all';
+        let internalSearch = '';
+
+        window.addEventListener('popstate', function () {
+            document.getElementById('mobile-drawer').style.left = '-100%';
+            document.getElementById('cart-telemetry-panel').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view-segment').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('.mobile-engineering-tabs .tab-node').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(`view-${viewId}`).classList.add('active');
+            
+            const linkNode = document.getElementById(`link-${viewId}`);
+            if(linkNode) linkNode.classList.add('active');
+
+            const tabNode = document.getElementById(`tab-${viewId}`);
+            if(tabNode) tabNode.classList.add('active');
+
+            if (internalSearch === '') {
+                document.getElementById('search-pc').value = '';
+                document.getElementById('search-mobile').value = '';
+            }
+            window.scrollTo(0,0);
+        }
+
+        function navigateFromDrawer(viewId) {
+            navigateTo(viewId);
+            toggleDrawer(false);
+        }
+
+        function toggleDrawer(open) {
+            const drawer = document.getElementById('mobile-drawer');
+            if (open) {
+                drawer.style.left = '0';
+                document.body.style.overflow = 'hidden';
+                history.pushState({ drawerActive: true }, "");
+            } else {
+                drawer.style.left = '-100%';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function toggleCart(open) {
+            const panel = document.getElementById('cart-telemetry-panel');
+            if (open) {
+                panel.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                history.pushState({ cartActive: true }, "");
+            } else {
+                panel.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function executeSearch(value) {
+            internalSearch = value.trim().toLowerCase();
+            document.getElementById('search-pc').value = value;
+            document.getElementById('search-mobile').value = value;
+
+            const currentActiveView = document.querySelector('.view-segment.active');
+            if (internalSearch !== '' && currentActiveView && currentActiveView.id !== 'view-catalog') {
+                navigateTo('catalog');
+            }
+            refreshTelemetryMatrix();
+        }
+
+        function filterCategoryMobile(cat) {
+            filterCategory(cat);
+            document.querySelectorAll('#mobile-drawer .filter-cell').forEach(c => {
+                if(c.id.startsWith('mb-cat-')) c.classList.remove('active-cell');
+            });
+            const activeCell = document.getElementById(`mb-cat-${cat}`);
+            if(activeCell) activeCell.classList.add('active-cell');
+
+            toggleDrawer(false);
+            navigateTo('catalog');
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.telemetry-panel .filter-cell').forEach(c => {
+                if(c.id.startsWith('cell-cat-')) c.classList.remove('active-cell');
+            });
+            const cell = document.getElementById(`cell-cat-${cat}`);
+            if(cell) cell.classList.add('active-cell');
+            refreshTelemetryMatrix();
+        }
+
+        function buildGrids() {
+            const hViguetas = document.getElementById('grid-home-viguetas');
+            const hComplementos = document.getElementById('grid-home-complementos');
+            const pPerformance = document.getElementById('grid-new-performance');
+
+            if(hViguetas) hViguetas.innerHTML = products.filter(p => p.category === 'Viguetas').map(p => compileCardHTML(p)).join('');
+            if(hComplementos) hComplementos.innerHTML = products.filter(p => p.category === 'Complementos').map(p => compileCardHTML(p)).join('');
+            if(pPerformance) pPerformance.innerHTML = products.map(p => compileCardHTML(p)).join('');
+            
+            refreshTelemetryMatrix();
+        }
+
+        function compileCardHTML(p) {
+            const available = p.stock > 0;
+            const stateClass = !available ? 'status-none' : (p.stock <= 20 ? 'status-low' : '');
+            const stateText = !available ? 'Bajo Pedido' : (p.stock <= 20 ? `Lote Bajo` : `Disponible`);
+
+            return `
+                <div class="automotive-card">
+                    <div class="card-media-zone">
+                        ${p.badge ? `<span class="spec-tier-badge">${p.badge}</span>` : ''}
+                        <img src="${p.img}" alt="${p.name}" onclick="showComponentDetail(${p.id})">
+                    </div>
+                    <div class="card-body-zone">
+                        <div>
+                            <div class="card-header-block">
+                                <div class="card-manufacturer">${p.brand}</div>
+                                <span class="sku-indicator">CÓD: ${p.sku}</span>
+                            </div>
+                            <h4 onclick="showComponentDetail(${p.id})">${p.name}</h4>
+                        </div>
+                        <div>
+                            <div class="card-meta-row">
+                                <span class="price-tag">Bs. ${p.price.toFixed(2)}</span>
+                                <span class="availability-status ${stateClass}">${stateText}</span>
+                            </div>
+                            <button class="btn-action-core ${!available ? 'disabled-state' : ''}" ${!available ? 'disabled' : ''} onclick="commitToCart(${p.id}, 1)">
+                                ${available ? 'Añadir al Presupuesto' : 'Consultar Importación'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function refreshTelemetryMatrix() {
+            const targetGrid = document.getElementById('grid-catalog-telemetry');
+            const counter = document.getElementById('results-count-tracker');
+            if(!targetGrid) return;
+
+            let records = products;
+
+            if(activeCategory !== 'all') records = records.filter(p => p.category === activeCategory);
+            if(internalSearch !== '') {
+                records = records.filter(p => 
+                    p.name.toLowerCase().includes(internalSearch) ||
+                    p.brand.toLowerCase().includes(internalSearch) ||
+                    p.category.toLowerCase().includes(internalSearch) ||
+                    p.sku.toLowerCase().includes(internalSearch)
+                );
+            }
+
+            counter.innerText = internalSearch !== '' ? `Filtrado: "${internalSearch}" (${records.length} ítems)` : `Panel: Catálogo de Suministros General`;
+
+            if (activeCategory === 'all' && internalSearch === '') {
+                const viguetasBlock = records.filter(p => p.category === 'Viguetas');
+                const complementosBlock = records.filter(p => p.category === 'Complementos');
+
+                let layoutBuffer = '';
+
+                if (viguetasBlock.length > 0) {
+                    layoutBuffer += `
+                        <div style="grid-column: 1 / -1; margin-bottom: 10px; border-bottom: 1px solid var(--border-refined); padding-bottom: 10px; margin-top:15px;">
+                            <h3 style="font-size: 0.95rem; font-weight:700; color:var(--carbon-ink); text-transform:uppercase; letter-spacing:1px;">Línea de Viguetas</h3>
+                        </div>
+                        ${viguetasBlock.map(p => compileCardHTML(p)).join('')}
+                    `;
+                }
+
+                if (complementosBlock.length > 0) {
+                    layoutBuffer += `
+                        <div style="grid-column: 1 / -1; margin-top: 30px; margin-bottom: 10px; border-bottom: 1px solid var(--border-refined); padding-bottom: 10px;">
+                            <h3 style="font-size: 0.95rem; font-weight:700; color:var(--carbon-ink); text-transform:uppercase; letter-spacing:1px;">Línea de Complementos (Plastoformo)</h3>
+                        </div>
+                        ${complementosBlock.map(p => compileCardHTML(p)).join('')}
+                    `;
+                }
+
+                targetGrid.innerHTML = layoutBuffer;
+            } else {
+                targetGrid.innerHTML = records.map(p => compileCardHTML(p)).join('') || 
+                    '<div style="grid-column:1/-1; text-align:center; padding:60px; color:var(--text-muted); font-size:0.85rem;">No se encontraron registros de materiales en el sistema.</div>';
+            }
+        }
+
+        function commitToCart(productId, quantity) {
+            const targetProduct = products.find(p => p.id === productId);
+            if(!targetProduct || targetProduct.stock <= 0) return;
+
+            const existingNode = cart.find(item => item.id === productId);
+            if(existingNode) {
+                if(existingNode.qty + quantity <= targetProduct.stock) {
+                    existingNode.qty += quantity;
+                } else {
+                    existingNode.qty = targetProduct.stock;
+                }
+            } else {
+                cart.push({ id: productId, qty: quantity });
+            }
+            synchronizeCartState();
+        }
+
+        function alterNodeQty(productId, delta) {
+            const limit = products.find(p => p.id === productId);
+            const item = cart.find(i => i.id === productId);
+            if(!item || !limit) return;
+
+            item.qty += delta;
+            if(item.qty <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+            } else if (item.qty > limit.stock) {
+                item.qty = limit.stock;
+            }
+            synchronizeCartState();
+        }
+
+        function synchronizeCartState() {
+            localStorage.setItem('habitapla_cart_core', JSON.stringify(cart));
+            drawCartUI();
+        }
+
+        function drawCartUI() {
+            const countMarker = document.getElementById('global-cart-counter');
+            const listWrapper = document.getElementById('cart-nodes-wrapper');
+            const totalDisplay = document.getElementById('cart-sum-display');
+            
+            let cumulativeQty = 0;
+            let cumulativeCost = 0;
+            let rawHTML = '';
+
+            cart.forEach(item => {
+                const matchingProd = products.find(p => p.id === item.id);
+                if(matchingProd) {
+                    cumulativeQty += item.qty;
+                    cumulativeCost += matchingProd.price * item.qty;
+                    rawHTML += `
+                        <div class="cart-node-item">
+                            <img src="${matchingProd.img}">
+                            <div style="flex:1;">
+                                <h5 style="font-size:0.85rem; font-weight:600; color:var(--carbon-ink); margin-bottom:4px; line-height:1.4;">${matchingProd.name}</h5>
+                                <span style="font-family:'Chakra Petch'; font-size:0.85rem; color:var(--structural-red); font-weight:700;">Bs. ${matchingProd.price.toFixed(2)}</span>
+                                <div class="quantity-controller" style="margin-top:10px; height:28px; max-width:95px;">
+                                    <button class="qty-node-btn" style="font-size:0.8rem;" onclick="alterNodeQty(${matchingProd.id}, -1)">-</button>
+                                    <input type="text" class="qty-node-display" style="font-size:0.85rem;" value="${item.qty}" readonly>
+                                    <button class="qty-node-btn" style="font-size:0.8rem;" onclick="alterNodeQty(${matchingProd.id}, 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if(countMarker) countMarker.innerText = cumulativeQty;
+            if(totalDisplay) totalDisplay.innerText = `Bs. ${cumulativeCost.toFixed(2)}`;
+            if(listWrapper) listWrapper.innerHTML = rawHTML || '<p style="color:var(--text-muted); padding:50px 0; font-size:0.85rem; text-align:center;">Ningún material seleccionado.</p>';
+        }
+
+        function showComponentDetail(id) {
+            const target = products.find(p => p.id === id);
+            if(!target) return;
+
+            document.getElementById('detail-display-img').src = target.img;
+            document.getElementById('detail-part-sku').innerText = `SKU: ${target.sku}`;
+            document.getElementById('detail-brand-seal').innerText = target.brand;
+            document.getElementById('detail-component-name').innerText = target.name;
+            document.getElementById('detail-component-desc').innerText = target.desc;
+            
+            document.getElementById('detail-bullet-attributes').innerHTML = target.bullets.map(b => `<li>${b}</li>`).join('');
+            
+            let matrixHtml = '';
+            for(let indicator in target.specs) {
+                matrixHtml += `<tr><td class="spec-label">${indicator}</td><td class="spec-value">${target.specs[indicator]}</td></tr>`;
+            }
+            document.getElementById('detail-table-specs').innerHTML = matrixHtml;
+
+            const isAvailable = target.stock > 0;
+            document.getElementById('detail-action-control-row').innerHTML = `
+                <div class="interaction-module">
+                    <div class="quantity-controller">
+                        <button class="qty-node-btn" onclick="modifyDetailNodeQty(-1)">-</button>
+                        <input type="number" class="qty-node-display" id="detail-node-input" value="1" min="1" max="${target.stock}" readonly>
+                        <button class="qty-node-btn" onclick="modifyDetailNodeQty(1)">+</button>
+                    </div>
+                    <button class="btn-action-core ${!isAvailable ? 'disabled-state' : ''}" ${!isAvailable ? 'disabled' : ''} onclick="executeDetailCommit(${target.id})" style="max-width:260px;">
+                        ${isAvailable ? 'Vincular a Presupuesto' : 'Solicitar Producción'}
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('detail-direct-wa-trigger').onclick = function() {
+                const queryText = encodeURIComponent(`Hola Habitapla, necesito asesoramiento técnico y cubicación para el ítem: ${target.name} (Código: ${target.sku})`);
+                window.open(`https://wa.me/59176809201?text=${queryText}`, '_blank');
+            };
+
+            navigateTo('detail');
+        }
+
+        function modifyDetailNodeQty(delta) {
+            const input = document.getElementById('detail-node-input');
+            if(!input) return;
+            let targetVal = parseInt(input.value) + delta;
+            const topLimit = parseInt(input.getAttribute('max'));
+            if(targetVal >= 1 && targetVal <= topLimit) input.value = targetVal;
+        }
+
+        function executeDetailCommit(id) {
+            const input = document.getElementById('detail-node-input');
+            const requestedQty = input ? parseInt(input.value) : 1;
+            commitToCart(id, requestedQty);
+        }
+
+        function toggleMatrixTab(paneId) {
+            document.querySelectorAll('.matrix-trigger').forEach(t => t.classList.remove('active-trigger'));
+            document.querySelectorAll('.matrix-pane').forEach(p => p.classList.remove('active-pane'));
+            
+            document.getElementById(`tab-btn-${paneId}`).classList.add('active-trigger');
+            document.getElementById(`matrix-pane-${paneId}`).classList.add('active-pane');
+        }
+
+        function dispatchWhatsAppOrder() {
+            if(cart.length === 0) return alert('La lista de presupuesto se encuentra vacía.');
+            
+            let structuredMessage = "*SOLICITUD DE COTIZACIÓN - HABITAPLA*\n";
+            structuredMessage += "Ubicación de obra: Yacuiba\n\n";
+            let aggregatedCost = 0;
+
+            cart.forEach((item, index) => {
+                const prod = products.find(p => p.id === item.id);
+                if(prod) {
+                    const rowCost = prod.price * item.qty;
+                    aggregatedCost += rowCost;
+                    structuredMessage += `${index + 1}. *${prod.name}*\n`;
+                    structuredMessage += `   Cantidad/Metros: ${item.qty} | Código: ${prod.sku} | Subtotal: Bs. ${rowCost.toFixed(2)}\n\n`;
+                }
+            });
+
+            structuredMessage += `*VALOR ESTIMADO BASE: Bs. ${aggregatedCost.toFixed(2)}*\n\n`;
+            structuredMessage += `_Por favor, confírmenme disponibilidad en planta y costo de envío perimetral._`;
+
+            const operationalNumber = "59176809201";
+            window.open(`https://wa.me/${operationalNumber}?text=${encodeURIComponent(structuredMessage)}`, '_blank');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            buildGrids();
+            drawCartUI();
+        });
+    </script>
+</body>
+</html>
