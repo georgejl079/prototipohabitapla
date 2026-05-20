@@ -884,7 +884,7 @@
 
             document.getElementById('detail-direct-wa-trigger').onclick = function() {
                 const queryText = encodeURIComponent(`Hola Habitapla, necesito asesoramiento técnico y cubicación para el ítem: ${target.name} (Código: ${target.sku})`);
-                window.open(`https://wa.me/59176809201?text=${queryText}`, '_blank');
+                window.open(`https://wa.me/59175179990?text=${queryText}`, '_blank');
             };
 
             navigateTo('detail');
@@ -932,7 +932,7 @@
             structuredMessage += `*VALOR ESTIMADO BASE: Bs. ${aggregatedCost.toFixed(2)}*\n\n`;
             structuredMessage += `_Por favor, confírmenme disponibilidad en planta y costo de envío perimetral._`;
 
-            const operationalNumber = "59176809201";
+            const operationalNumber = "59175179990";
             window.open(`https://wa.me/${operationalNumber}?text=${encodeURIComponent(structuredMessage)}`, '_blank');
         }
 
