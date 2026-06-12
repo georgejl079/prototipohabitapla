@@ -205,6 +205,18 @@
         
         .component-title { font-size: 1.6rem; font-weight: 700; color: var(--carbon-ink); margin-bottom: 15px; line-height: 1.3; letter-spacing: -0.5px; }
         .component-synopsis { font-size: 0.92rem; color: var(--text-body); line-height: 1.7; margin-bottom: 30px; }
+        .history-layout { padding: 40px 8% 70px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 30px; background: var(--premium-bg); }
+        .history-feature { background: var(--luxury-white); border: 1px solid var(--border-refined); border-radius: 6px; overflow: hidden; }
+        .history-feature img { width: 100%; height: 100%; min-height: 360px; object-fit: cover; display: block; }
+        .history-panel { background: var(--luxury-white); border: 1px solid var(--border-refined); border-radius: 6px; padding: 30px; }
+        .history-panel h3 { font-family: 'Chakra Petch', sans-serif; color: var(--carbon-ink); letter-spacing: 1px; margin-bottom: 12px; }
+        .history-panel p { font-size: 0.9rem; line-height: 1.7; color: var(--text-body); margin-bottom: 12px; }
+        .history-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+        .history-metric-card { background: var(--premium-bg); border: 1px solid var(--border-refined); border-radius: 4px; padding: 14px; }
+        .history-metric-card strong { color: var(--structural-red); font-family: 'Chakra Petch', sans-serif; display: block; margin-bottom: 5px; }
+        .history-metric-card span { color: var(--text-muted); font-size: 0.8rem; }
+        .btn-share-inline { width: 100%; background: var(--luxury-white); color: var(--carbon-ink); border: 1px solid var(--border-refined); padding: 12px 15px; border-radius: 4px; cursor: pointer; font-size: 0.78rem; font-weight: 600; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-share-inline:hover { border-color: var(--structural-red); color: var(--structural-red); }
         
         .interaction-module { display: flex; gap: 15px; align-items: center; margin-bottom: 35px; background: var(--premium-bg); padding: 16px; border: 1px solid var(--border-refined); border-radius: 4px; }
         .quantity-controller { display: flex; align-items: center; background: var(--luxury-white); border: 1px solid var(--border-refined); height: 46px; border-radius: 4px; overflow: hidden; }
@@ -307,6 +319,9 @@
             
             .workspace-detail { flex-direction: column; padding: 30px 5%; gap: 35px; }
             .blueprint-left, .specs-right { width: 100%; }
+            .history-layout { grid-template-columns: 1fr; padding: 24px 5% 45px; }
+            .history-feature img { min-height: 240px; }
+            .history-metrics { grid-template-columns: 1fr; }
             .hamburger { display: block; }
             .mobile-engineering-tabs { display: flex; }
             .footer-matrix { grid-template-columns: 1fr; gap: 40px; }
@@ -337,6 +352,7 @@
                 <div class="filter-cell" id="mb-nav-home" onclick="navigateFromDrawer('home')" style="width:100%; justify-content:flex-start;"><i class="fas fa-building"></i> Líneas de Planta</div>
                 <div class="filter-cell" id="mb-nav-new" onclick="navigateFromDrawer('new')" style="width:100%; justify-content:flex-start;"><i class="fas fa-star"></i> Lanzamientos</div>
                 <div class="filter-cell" id="mb-nav-catalog" onclick="navigateFromDrawer('catalog')" style="width:100%; justify-content:flex-start;"><i class="fas fa-cubes"></i> Catálogo Completo</div>
+                <div class="filter-cell" id="mb-nav-history" onclick="navigateFromDrawer('history')" style="width:100%; justify-content:flex-start;"><i class="fas fa-landmark"></i> Historia</div>
             </div>
 
             <span class="drawer-heading">Categorías</span>
@@ -360,6 +376,7 @@
             <li><a id="link-home" class="active" onclick="navigateTo('home')">Líneas de Planta</a></li>
             <li><a id="link-new" onclick="navigateTo('new')">Lanzamientos</a></li>
             <li><a id="link-catalog" onclick="navigateTo('catalog')">Catálogo Técnico</a></li>
+            <li><a id="link-history" onclick="navigateTo('history')">Historia</a></li>
         </ul>
 
         <div class="search-wrapper-top">
@@ -387,13 +404,17 @@
             <i class="fas fa-cubes"></i>
             <span class="tech-font">Catálogo</span>
         </div>
+        <div id="tab-history" class="tab-node" onclick="navigateTo('history')">
+            <i class="fas fa-landmark"></i>
+            <span class="tech-font">Historia</span>
+        </div>
         <div id="tab-cart" class="tab-node" onclick="toggleCart(true)">
             <i class="fas fa-file-invoice"></i>
             <span class="tech-font">Cotizar</span>
         </div>
     </div>
 
-    <a href="https://wa.me/59175179990?text=Hola%20Habitapla%2C%20solicito%20asesoramiento%20técnico%20para%20una%20obra%20en%20Yacuiba." 
+    <a href="https://wa.me/59176809201?text=Hola%20Habitapla%2C%20solicito%20asesoramiento%20técnico%20para%20una%20obra%20en%20Yacuiba." 
        target="_blank" class="whatsapp-floating-action">
         <i class="fab fa-whatsapp" style="color: #25D366;"></i>
     </a>
@@ -451,6 +472,44 @@
         <section class="industrial-grid" id="grid-catalog-telemetry"></section>
     </div>
 
+    <div id="view-history" class="view-segment">
+        <header class="hero-banner">
+            <div class="hero-meta">
+                <h1>HISTORIA DE HABITAPLA</h1>
+                <p>Evolución de nuestra planta en Yacuiba y el impacto técnico en proyectos residenciales y comerciales.</p>
+            </div>
+        </header>
+        <section class="history-layout">
+            <div class="history-feature">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1400" alt="Obra de losa en proceso con materiales prefabricados">
+            </div>
+            <div class="history-panel">
+                <h3>Trayectoria y crecimiento técnico</h3>
+                <p>Habitapla nace en Yacuiba para responder a la necesidad de sistemas constructivos más rápidos, resistentes y confiables en la región del Chaco boliviano.</p>
+                <p>Con una operación enfocada en control de calidad, se incorporaron procesos de curado y verificación dimensional para garantizar mejor desempeño en obra.</p>
+                <p>Los siguientes valores son referenciales y muestran la escala de crecimiento alcanzada durante la última década.</p>
+                <div class="history-metrics">
+                    <div class="history-metric-card">
+                        <strong>+12 años</strong>
+                        <span>de experiencia en prefabricados (dato referencial).</span>
+                    </div>
+                    <div class="history-metric-card">
+                        <strong>+4,500</strong>
+                        <span>obras atendidas entre vivienda y comercio (referencial).</span>
+                    </div>
+                    <div class="history-metric-card">
+                        <strong>+1.2M m2</strong>
+                        <span>de losa soportada por viguetas fabricadas (estimado).</span>
+                    </div>
+                    <div class="history-metric-card">
+                        <strong>98%</strong>
+                        <span>de entregas en plazo de producción (promedio histórico).</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
     <div id="view-detail" class="view-segment">
         <div class="workspace-detail">
             <div class="blueprint-left">
@@ -467,6 +526,9 @@
                 <p class="component-synopsis" id="detail-component-desc"></p>
 
                 <div id="detail-action-control-row" style="margin-bottom:30px;"></div>
+                <button id="detail-share-trigger" class="btn-share-inline" onclick="shareCurrentProduct()">
+                    <i class="fas fa-share-alt"></i> Compartir este producto
+                </button>
 
                 <div style="display:flex; flex-direction:column; gap:14px;">
                     <button class="btn-action-core" style="padding:166px; padding:16px; background:var(--premium-bg); color: var(--carbon-ink); border: 1px solid var(--border-refined);" onclick="alert('Descargando guía de cálculo y dosificación...')">
@@ -526,7 +588,7 @@
             <p>&copy; 2026 HABITAPLA. Todos los derechos reservados.</p>
             <div class="social-cluster">
                 <a href="https://facebook.com/Habitapla" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://wa.me/59175179990" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://wa.me/59176809201" target="_blank"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </footer>
@@ -561,7 +623,7 @@
                     'Adherencia Superior: Geometría dentada para un agarre perfecto con la losa vaciada.'
                 ],
                 specs: { 'Fabricante': 'Habitapla Planta Yacuiba', 'Tipo': 'Pretensada Industrial', 'Dosificación': 'H25 (250 kg/cm²)', 'Corte': 'A medida del proyecto' },
-                img: 'https://imgs.search.brave.com/H67IagIOyzcY7MA9V2WMsz69_5ckNm3FZEx02Te8Xzw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzg5NDUyNy1NTEE3/NjI0OTk1NDg1MV8w/NTIwMjQtRS53ZWJw' // Puedes reemplazar por fotos tuyas del plastoformo o las viguetas
+                img: 'https://imgs.search.brave.com/H67IagIOyzcY7MA9V2WMsz69_5ckNm3FZEx02Te8Xzw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzg5NDUyNy1NTEE3/NjI0OTk1NDg1MV8w/NTIwMjQtRS53ZWJw'
             },
             { 
                 id: 2, section: 'complementos', brand: 'Habitapla', category: 'Complementos', sku: 'COMP-PLAST-10', stock: 500, price: 14.50, badge: 'Aislamiento Térmico', 
@@ -593,6 +655,7 @@
         let activeCategory = 'all';
         let activeBrand = 'all';
         let internalSearch = '';
+        let selectedProduct = null;
 
         window.addEventListener('popstate', function () {
             document.getElementById('mobile-drawer').style.left = '-100%';
@@ -853,6 +916,7 @@
         function showComponentDetail(id) {
             const target = products.find(p => p.id === id);
             if(!target) return;
+            selectedProduct = target;
 
             document.getElementById('detail-display-img').src = target.img;
             document.getElementById('detail-part-sku').innerText = `SKU: ${target.sku}`;
@@ -884,10 +948,32 @@
 
             document.getElementById('detail-direct-wa-trigger').onclick = function() {
                 const queryText = encodeURIComponent(`Hola Habitapla, necesito asesoramiento técnico y cubicación para el ítem: ${target.name} (Código: ${target.sku})`);
-                window.open(`https://wa.me/59175179990?text=${queryText}`, '_blank');
+                window.open(`https://wa.me/59176809201?text=${queryText}`, '_blank');
             };
 
             navigateTo('detail');
+        }
+
+        async function shareCurrentProduct() {
+            if(!selectedProduct) return;
+
+            const shareText = `${selectedProduct.name} (${selectedProduct.sku}) - ${selectedProduct.desc}`;
+            const sharePayload = {
+                title: `Habitapla | ${selectedProduct.name}`,
+                text: shareText,
+                url: window.location.href
+            };
+
+            try {
+                if (navigator.share) {
+                    await navigator.share(sharePayload);
+                    return;
+                }
+                await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
+                alert('Información copiada al portapapeles para compartir.');
+            } catch (error) {
+                alert('No se pudo compartir en este dispositivo.');
+            }
         }
 
         function modifyDetailNodeQty(delta) {
@@ -932,7 +1018,7 @@
             structuredMessage += `*VALOR ESTIMADO BASE: Bs. ${aggregatedCost.toFixed(2)}*\n\n`;
             structuredMessage += `_Por favor, confírmenme disponibilidad en planta y costo de envío perimetral._`;
 
-            const operationalNumber = "59175179990";
+            const operationalNumber = "59176809201";
             window.open(`https://wa.me/${operationalNumber}?text=${encodeURIComponent(structuredMessage)}`, '_blank');
         }
 
